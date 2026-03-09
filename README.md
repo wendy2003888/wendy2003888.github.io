@@ -5,6 +5,11 @@
 Hey, nice to meet you, this is my special place to record my thoughts, visions and insiprations.
 </div>
 
+## Local Test
+
+```
+bundle exec jekyll serve
+```
 
 ## Theme
 
