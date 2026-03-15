@@ -36,7 +36,24 @@
             {%- for path in page_paths -%}
               {%- assign my_page = site.pages | where: "path", path | first -%}
               {%- if my_page.title -%}
-              <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | upcase | escape }}</a>
+                {%- assign is_cn = false -%}
+                {%- if page.path == "cn.html" or page.collection == "posts_cn" or page.post_collection == "posts_cn" -%}
+                  {%- assign is_cn = true -%}
+                {%- endif -%}
+
+                {%- if my_page.path == "cn.html" -%}
+                  {%- if is_cn -%}
+                    <a class="page-link" href="{{ '/' | relative_url }}">EN</a>
+                  {%- else -%}
+                    <a class="page-link" href="{{ my_page.url | relative_url }}">CN</a>
+                  {%- endif -%}
+                {%- elsif my_page.path == "categories.html" and is_cn -%}
+                  <a class="page-link" href="{{ '/cn/categories/' | relative_url }}">{{ my_page.title | upcase | escape }}</a>
+                {%- elsif my_page.path == "tags.html" and is_cn -%}
+                  <a class="page-link" href="{{ '/cn/tags/' | relative_url }}">{{ my_page.title | upcase | escape }}</a>
+                {%- else -%}
+                  <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | upcase | escape }}</a>
+                {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
 

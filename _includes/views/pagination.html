@@ -1,3 +1,9 @@
+{%- if page.post_collection -%}
+  {%- assign all_posts = site[page.post_collection] | sort: "date" | reverse -%}
+{%- else -%}
+  {%- assign all_posts = site.posts -%}
+{%- endif -%}
+
 {%- if page.paginator -%}
   {%- assign paginator = page.paginator -%}
 {%- elsif paginator == nil -%}
@@ -8,14 +14,20 @@
 {%- include functions.html func='get_value' default='z' -%}
 {%- assign image_style = return | append: '-image-style' -%}
 
-{%- if paginator.posts.size > 0 -%}
+{%- if page.post_collection -%}
+  {%- assign display_posts = all_posts -%}
+{%- else -%}
+  {%- assign display_posts = paginator.posts -%}
+{%- endif -%}
+
+{%- if display_posts.size > 0 -%}
 <div class="pagination">
   <!-- Post list links -->
   <ul class="post-list {{ image_style }}">
     <!-- Top list item -->
     {%- if paginator == site or paginator.page == 1 -%}
       {%- assign post_item_class = "top-post" -%}
-      {%- assign posts = site.posts
+      {%- assign posts = all_posts
         | where_exp: "item", "item.top > 0"
         | sort: "top" -%}
       {%- for post in posts -%}
@@ -25,7 +37,7 @@
 
     <!-- Normal list item -->
     {%- assign post_item_class = "" -%}
-    {%- for post in paginator.posts -%}
+    {%- for post in display_posts -%}
       {%- if post.top -%}
         {%- continue -%}
       {%- endif -%}
@@ -34,8 +46,10 @@
   </ul>
 
   <!-- Pagination links -->
-  {%- if paginator.posts.size < site.posts.size -%}
-    {%- include views/paginator.html -%}
-  {%- endif -%}
+  {%- unless page.post_collection -%}
+    {%- if paginator.posts.size < site.posts.size -%}
+      {%- include views/paginator.html -%}
+    {%- endif -%}
+  {%- endunless -%}
 </div>
 {%- endif -%}

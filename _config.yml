@@ -127,6 +127,7 @@ header_pages:
   - categories.html
   - tags.html
   - about.html
+  - cn.html
 
 # Page default value
 defaults:
@@ -206,6 +207,15 @@ defaults:
 #   label: "utterances comment"
 #   theme: "github-light"
 #   follow_site_theme: true
+
+# Collections
+collections:
+  posts_cn:
+    output: true
+    permalink: /cn/posts/:title/
+
+# Permalink for posts
+permalink: /posts/:year:month:day:title/
 
 # Build settings
 # highlighter: none

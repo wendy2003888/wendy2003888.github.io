@@ -5,5 +5,9 @@
 
 {% assign keys = tags %}
 {% assign field = 'tags' %}
-{% assign url = '/tags.html' | relative_url %}
+{% if page.collection == "posts_cn" or page.post_collection == "posts_cn" %}
+  {% assign url = '/cn/tags/' | relative_url %}
+{% else %}
+  {% assign url = '/tags/' | relative_url %}
+{% endif %}
 {%- include sidebar/common-list.html -%}

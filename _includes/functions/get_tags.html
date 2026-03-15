@@ -1,10 +1,20 @@
 {% assign split_mark = '<|>' %}
 
 {% assign tags = '' %}
-{% for tag in site.tags %}
-  {% assign name = tag | first %}
-  {% assign tags = tags | append: split_mark  | append: name %}
-{% endfor %}
+{% if page.collection == "posts_cn" or page.post_collection == "posts_cn" %}
+  {% for post in site.posts_cn %}
+    {% for tag in post.tags %}
+      {% unless tags contains tag %}
+        {% assign tags = tags | append: split_mark | append: tag %}
+      {% endunless %}
+    {% endfor %}
+  {% endfor %}
+{% else %}
+  {% for tag in site.tags %}
+    {% assign name = tag | first %}
+    {% assign tags = tags | append: split_mark  | append: name %}
+  {% endfor %}
+{% endif %}
 
 {% assign return = tags
   | remove_first: split_mark

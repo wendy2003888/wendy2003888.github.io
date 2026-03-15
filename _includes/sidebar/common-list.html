@@ -6,18 +6,26 @@
   {%- assign field = include.field -%}
 {%- endif -%}
 
+{%- if page.collection == "posts_cn" or page.post_collection == "posts_cn" -%}
+  {%- assign sidebar_posts = site.posts_cn -%}
+  {%- assign sidebar_home = '/cn/' -%}
+{%- else -%}
+  {%- assign sidebar_posts = site.posts -%}
+  {%- assign sidebar_home = '/' -%}
+{%- endif -%}
+
 <div class="common-list">
   <ul>
     <li>
-      <a href="{{ '/home.html' | relative_url }}">
-        All<span>{{ site.posts.size }}</span>
+      <a href="{{ sidebar_home | relative_url }}">
+        All<span>{{ sidebar_posts.size }}</span>
       </a>
     </li>
 
     {% for key in  keys %}
       <li>
         <a href="{{ url }}#h-{{ key }}">
-          {{ key }} <span>{{ site.posts | where: field, key | size }}</span>
+          {{ key }} <span>{{ sidebar_posts | where: field, key | size }}</span>
         </a>
       </li>
     {% endfor %}

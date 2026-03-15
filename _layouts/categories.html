@@ -3,7 +3,13 @@ layout: framework
 sidebar: category-list
 ---
 
-{%- if site.posts.size > 0 -%}
+{%- if page.post_collection -%}
+  {%- assign cat_posts = site[page.post_collection] -%}
+{%- else -%}
+  {%- assign cat_posts = site.posts -%}
+{%- endif -%}
+
+{%- if cat_posts.size > 0 -%}
 
   {%- include functions.html func='log' level='debug' msg='Get value' -%}
   {%- include functions.html func='get_categories' -%}

@@ -5,5 +5,9 @@
 
 {% assign keys = categories %}
 {% assign field = 'categories' %}
-{% assign url = '/categories.html' | relative_url %}
+{% if page.collection == "posts_cn" or page.post_collection == "posts_cn" %}
+  {% assign url = '/cn/categories/' | relative_url %}
+{% else %}
+  {% assign url = '/categories/' | relative_url %}
+{% endif %}
 {% include sidebar/common-list.html %}

@@ -3,7 +3,13 @@ layout: framework
 sidebar: tag-list
 ---
 
-{%- if site.posts.size > 0 -%}
+{%- if page.post_collection -%}
+  {%- assign tag_posts = site[page.post_collection] -%}
+{%- else -%}
+  {%- assign tag_posts = site.posts -%}
+{%- endif -%}
+
+{%- if tag_posts.size > 0 -%}
 
   {%- include functions.html func='log' level='debug' msg='Get tags value' -%}
   {%- include functions.html func='get_tags' -%}
